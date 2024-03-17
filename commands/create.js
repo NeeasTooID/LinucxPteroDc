@@ -3,10 +3,16 @@ const config = require('../config.js');
 
 const apiKey = config.pterodactylApiKey;
 const baseUrl = config.baseUrl;
+const nodeId = config.nodeId;
+const maxAllocations = config.maxAllocations;
+const ram = config.ram;
+const swap = config.swap;
+const disk = config.disk;
+const cpu = config.cpu;
 
 async function createServer(eggName, serverName) {
     try {
-        const response = await axios.get(`${baseUrl}/nodes/${config.nodeId}`, {
+        const response = await axios.get(`${baseUrl}/nodes/${nodeId}`, {
             headers: {
                 'Authorization': `Bearer ${apiKey}`,
                 'Accept': 'Application/vnd.pterodactyl.v1+json',
@@ -15,20 +21,32 @@ async function createServer(eggName, serverName) {
 
         const allocations = response.data.attributes.relationships.allocations.data.length;
 
-        if (allocations >= config.maxAllocations) {
+        if (allocations >= maxAllocations) {
             console.error('Semua alokasi di node sudah terisi penuh.');
             return 'Maaf, semua alokasi di node sudah terisi penuh. Tidak dapat membuat server baru.';
+        }
+
+        // Memeriksa apakah egg yang diminta tersedia
+        const eggsResponse = await axios.get(`${baseUrl}/eggs`, {
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Accept': 'Application/vnd.pterodactyl.v1+json',
+            }
+        });
+        const eggs = eggsResponse.data.data.map(egg => egg.attributes.name);
+        if (!eggs.includes(eggName)) {
+            return `Egg \`${eggName}\` tidak tersedia. Silakan gunakan perintah \`c!l egglist\` untuk melihat daftar eggs yang tersedia.`;
         }
 
         const serverResponse = await axios.post(`${baseUrl}/servers`, {
             egg: eggName,
             name: serverName,
             limits: {
-                memory: config.ram,
-                swap: config.swap,
-                disk: config.disk,
+                memory: ram,
+                swap: swap,
+                disk: disk,
                 io: 500,
-                cpu: config.cpu,
+                cpu: cpu,
             }
         }, {
             headers: {
