@@ -1,17 +1,13 @@
-// Import library
 const Discord = require('discord.js');
 const fs = require('fs');
 const config = require('./config.js');
 
-// Konfigurasi bot Discord
-const client = new Discord.Client();
-const prefix = 'c!l'; // Prefix untuk perintah bot
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
+const prefix = 'c!l';
 client.commands = new Discord.Collection();
 
-// Token bot Discord
 const token = config.discordToken;
 
-// Membaca file command
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
@@ -19,21 +15,16 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
-// Event saat bot siap beroperasi
 client.once('ready', () => {
     console.log('Bot Discord telah siap!');
 });
 
-// Event saat bot menerima pesan
 client.on('message', message => {
-    // Memeriksa apakah pesan dimulai dengan prefix dan dari pengguna yang valid
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-    // Parsing argumen dari pesan
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
-    // Memeriksa apakah command tersebut ada
     if (!client.commands.has(commandName)) return;
 
     const command = client.commands.get(commandName);
@@ -46,5 +37,6 @@ client.on('message', message => {
     }
 });
 
-// Login bot menggunakan token
-client.login(token);
+client.login(token).catch(error => {
+    console.error('Terjadi kesalahan saat login:', error);
+});
