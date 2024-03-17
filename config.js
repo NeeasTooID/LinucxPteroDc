@@ -6,7 +6,6 @@ module.exports = {
   ram: 0,
   disk: 2048,
   maxAllocations: 20,
-  maxNodes: 3,
   nodeId: 5, // ID node yang ingin digunakan untuk pembuatan server
   swap: -1 // Nilai swap
 };
