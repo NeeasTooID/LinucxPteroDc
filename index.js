@@ -8,11 +8,9 @@ const client = new Discord.Client();
 const prefix = 'c!l'; // Prefix untuk perintah bot
 
 // Token bot Discord
-const token = 'TOKEN_DISCORD_BOT_ANDA';
-
-// Key API Pterodactyl
-const apiKey = 'API_KEY_PTERODACTYL_ANDA';
-const baseUrl = 'https://panel.yourpterodactyl.com/api/client'; // URL panel Pterodactyl
+const token = config.discordToken;
+const apiKey = config.pterodactylApiKey;
+const baseUrl = config.baseUrl;
 
 // Fungsi untuk membuat server
 async function createServer(eggName, serverName) {
