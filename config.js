@@ -1,6 +1,8 @@
 module.exports = {
   discordToken: 'TOKEN_DISCORD_BOT_ANDA',
-  cpu: 1, // Jumlah CPU core
-  ram: 512, // Jumlah RAM dalam MB
-  disk: 5120 // Jumlah disk dalam MB
+  pterodactylApiKey: 'API_KEY_PTERODACTYL_ANDA',
+  baseUrl: 'https://panel.yourpterodactyl.com/api/client',
+  cpu: 1,
+  ram: 512,
+  disk: 5120
 };
