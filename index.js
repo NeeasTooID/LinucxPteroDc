@@ -1,59 +1,22 @@
 // Import library
 const Discord = require('discord.js');
-const axios = require('axios');
+const fs = require('fs');
 const config = require('./config.js');
 
 // Konfigurasi bot Discord
 const client = new Discord.Client();
 const prefix = 'c!l'; // Prefix untuk perintah bot
+client.commands = new Discord.Collection();
 
 // Token bot Discord
 const token = config.discordToken;
-const apiKey = config.pterodactylApiKey;
-const baseUrl = config.baseUrl;
 
-// Fungsi untuk membuat server
-async function createServer(eggName, serverName) {
-    try {
-        const response = await axios.post(`${baseUrl}/servers`, {
-            egg: eggName,
-            name: serverName,
-            limits: {
-                memory: config.ram,
-                swap: 0,
-                disk: config.disk,
-                io: 500,
-                cpu: config.cpu,
-            }
-        }, {
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Accept': 'Application/vnd.pterodactyl.v1+json',
-                'Content-Type': 'application/json',
-            }
-        });
-        console.log('Server berhasil dibuat:', response.data.attributes.identifier);
-        return response.data.attributes.identifier;
-    } catch (error) {
-        console.error('Gagal membuat server:', error.response.data.errors);
-        return null;
-    }
-}
+// Membaca file command
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-// Fungsi untuk menghapus server
-async function deleteServer(serverId) {
-    try {
-        await axios.delete(`${baseUrl}/servers/${serverId}`, {
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Accept': 'Application/vnd.pterodactyl.v1+json',
-                'Content-Type': 'application/json',
-            }
-        });
-        console.log('Server berhasil dihapus:', serverId);
-    } catch (error) {
-        console.error('Gagal menghapus server:', error.response.data.errors);
-    }
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
 }
 
 // Event saat bot siap beroperasi
@@ -62,37 +25,24 @@ client.once('ready', () => {
 });
 
 // Event saat bot menerima pesan
-client.on('message', async message => {
+client.on('message', message => {
     // Memeriksa apakah pesan dimulai dengan prefix dan dari pengguna yang valid
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     // Parsing argumen dari pesan
     const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const command = args.shift().toLowerCase();
+    const commandName = args.shift().toLowerCase();
 
-    // Handler perintah c!l create
-    if (command === 'create') {
-        const eggName = args.shift();
-        const serverName = args.join(' ');
-        if (!eggName || !serverName) {
-            return message.channel.send('Format perintah salah. Gunakan: `c!l create (nama eggs) (nama server)`');
-        }
-        const serverId = await createServer(eggName, serverName);
-        if (serverId) {
-            message.channel.send(`Server \`${serverName}\` berhasil dibuat dengan ID: \`${serverId}\``);
-        } else {
-            message.channel.send('Gagal membuat server, silakan coba lagi.');
-        }
-    }
+    // Memeriksa apakah command tersebut ada
+    if (!client.commands.has(commandName)) return;
 
-    // Handler perintah c!l delete
-    if (command === 'delete') {
-        const serverId = args.shift();
-        if (!serverId) {
-            return message.channel.send('Format perintah salah. Gunakan: `c!l delete (id server)`');
-        }
-        await deleteServer(serverId);
-        message.channel.send(`Server dengan ID \`${serverId}\` berhasil dihapus.`);
+    const command = client.commands.get(commandName);
+
+    try {
+        command.execute(message, args);
+    } catch (error) {
+        console.error(error);
+        message.reply('Terjadi kesalahan saat menjalankan perintah tersebut!');
     }
 });
 
