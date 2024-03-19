@@ -30,10 +30,10 @@ module.exports = {
                         "CMD_RUN": "node index.js"
             },
             "feature_limits": {
-                "databases": 2,
-                "allocations": 1,
-                "backups": 10
-            },
+                        "databases": 0,
+                        "backups": 1,
+                        "allocations": 0
+                    },
             "deploy": {
                 "locations": gaming,
                 "dedicated_ip": false,
