@@ -34,13 +34,11 @@ module.exports = {
                         "backups": 1,
                         "allocations": 0
            },
-            "deploy": {
-                locations: [parseInt(loc)],
+            deploy: {
+                        locations: [parseInt(loc)],
                         dedicated_ip: false,
                         port_range: [],
-            },
-            "start_on_completion": false,
-            "oom_disabled": false
+                    },
         })
 
         axios({
