@@ -9,20 +9,15 @@ The Project is currently ongoing
 
 Usage The Command Line to Download And install modules 
 
-```bash
+```
 git clone https://github.com/luxxy-gf/pterodactyl-bot
 ```
-#
-```bash
+# Install Module
+```
 npm install
 ```
-# 
-install pm2 to run it in the background
-```bash
-npm i -g pm2
+# Config.json
 ```
-#
-```json
 {
     "bot": {
         "token": "",
