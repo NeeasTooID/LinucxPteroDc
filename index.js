@@ -1,42 +1,22 @@
 const Discord = require('discord.js');
+const { Collection } = require('discord.js');
+const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES'] });
+
+module.exports = client;
+
 const fs = require('fs');
-const config = require('./config.js');
+client.categories = fs.readdirSync("./commands/");
+client.aliases = new Collection();
+client.commands = new Collection();
+client.slashCommands = new Collection();
+client.config = require("./config.json");
 
-const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
-const prefix = 'c!l';
-client.commands = new Discord.Collection();
+require("./handler")(client);
 
-const token = config.discordToken;
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
-}
+let db = require("quick.db");
 
-client.once('ready', () => {
-    console.log('Bot Discord telah siap!');
-});
+client.userData = new db.table("userData");
 
-client.on('message', message => {
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-    const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
-
-    if (!client.commands.has(commandName)) return;
-
-    const command = client.commands.get(commandName);
-
-    try {
-        command.execute(message, args);
-    } catch (error) {
-        console.error(error);
-        message.reply('Terjadi kesalahan saat menjalankan perintah tersebut!');
-    }
-});
-
-client.login(token).catch(error => {
-    console.error('Terjadi kesalahan saat login:', error);
-});
+client.login(client.config.bot.token);
