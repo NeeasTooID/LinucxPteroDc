@@ -29,7 +29,7 @@ module.exports = {
                         "AUTO_UPDATE": "0",
                         "CMD_RUN": "node index.js"
             },
-            "feature_limits": {
+           "feature_limits": {
                         "databases": 0,
                         "backups": 1,
                         "allocations": 0
