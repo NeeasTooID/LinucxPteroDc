@@ -1,12 +1,11 @@
 {
-  "name": "pterodactyl-bot",
-  "author": "Luxxy-GF",
+  "name": "LinucxPteroDc",
+  "author": "HindiaFtNpc",
   "description": "A bot for Pterodactl",
-  "version": "1.0.0",
+  "version": "1.0",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "pm2": "pm2 start pm2.json",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
