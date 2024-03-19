@@ -24,10 +24,10 @@ module.exports = {
                 "cpu": 25
             },
             "environment": {
-                "MINECRAFT_VERSION": "latest",
-                "SERVER_JARFILE": "server.jar",
-                "DL_PATH": "https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/503/downloads/paper-1.16.5-503.jar",
-                "BUILD_NUMBER": "latest"
+                "INST": "npm",
+                        "USER_UPLOAD": "0",
+                        "AUTO_UPDATE": "0",
+                        "CMD_RUN": "node index.js"
             },
             "feature_limits": {
                 "databases": 2,
