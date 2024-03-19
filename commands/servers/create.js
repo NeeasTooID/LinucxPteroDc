@@ -35,9 +35,9 @@ module.exports = {
                         "allocations": 0
            },
             "deploy": {
-                "locations": gaming,
-                "dedicated_ip": false,
-                "port_range": []
+                locations: [parseInt(loc)],
+                        dedicated_ip: false,
+                        port_range: [],
             },
             "start_on_completion": false,
             "oom_disabled": false
