@@ -12,9 +12,9 @@ module.exports = {
         const data = ({
             "name": `${args[0]}`,
             "user": '1',
-            "nest": 1,
-            "egg": 3,
-            "docker_image": "quay.io/pterodactyl/core:java-11",
+            "nest": 5,
+            "egg": 18,
+            "docker_image": "ghcr.io/parkervcp/yolks:nodejs_20",
             "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
             "limits": {
                 "memory": 2048,
