@@ -10,7 +10,7 @@ The Project is currently ongoing
 Usage The Command Line to Download And install modules 
 
 ```
-git clone https://github.com/luxxy-gf/pterodactyl-bot
+git clone https://github.com/NeeasTooID/LinucxPteroDc.git
 ```
 # Install Module
 ```
