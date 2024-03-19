@@ -32,7 +32,7 @@ npm i -g pm2
     },
     "embed": {
         "color": "BLUE",
-        "footer": "Made by @Luxxy#1337"
+        "footer": "Made by YusupKakuu"
     },
     "panel": {
         "panelurl": "",
@@ -40,7 +40,6 @@ npm i -g pm2
         "panelapikey": "",
         "panelclientapikey": ""
     },
-    "db": {}
 }
 ```
 
