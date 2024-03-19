@@ -33,7 +33,7 @@ module.exports = {
                         "databases": 0,
                         "backups": 1,
                         "allocations": 0
-                    },
+           },
             "deploy": {
                 "locations": gaming,
                 "dedicated_ip": false,
