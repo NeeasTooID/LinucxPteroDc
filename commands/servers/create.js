@@ -17,11 +17,11 @@ module.exports = {
             "docker_image": "ghcr.io/parkervcp/yolks:nodejs_20",
             "startup": "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then git pull; fi; if [[ ! -z ${NODE_PACKAGES} ]]; then /usr/local/bin/npm install ${NODE_PACKAGES}; fi; if [[ ! -z ${UNNODE_PACKAGES} ]]; then /usr/local/bin/npm uninstall ${UNNODE_PACKAGES}; fi; if [ -f /home/container/package.json ]; then /usr/local/bin/npm install; fi; if [[ "${MAIN_FILE}" == "*.js" ]]; then /usr/local/bin/node "/home/container/${MAIN_FILE}" ${NODE_ARGS}; else /usr/local/bin/ts-node --esm "/home/container/${MAIN_FILE}" ${NODE_ARGS}; fi",
             "limits": {
-                "memory": 2048,
-                "swap": 0,
-                "disk": 10240,
+                "memory": 0,
+                "swap": -1,
+                "disk": 2048,
                 "io": 500,
-                "cpu": 0
+                "cpu": 25
             },
             "environment": {
                 "MINECRAFT_VERSION": "latest",
