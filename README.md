@@ -5,14 +5,14 @@ Pterodactyl Bot is a Discord Bot that controls [pterodactyl](https://pterodactyl
 #
 The Project is currently ongoing
 
-## Installation
+### Installation
 
 Usage The Command Line to Download And install modules 
 
 ```
 git clone https://github.com/NeeasTooID/LinucxPteroDc.git
 ```
-# Install Module
+### Install Module
 ```
 npm install
 ```
