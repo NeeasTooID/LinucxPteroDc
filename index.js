@@ -1,6 +1,8 @@
 const fs = require('fs');
 const child = require('child_process');
 
+const prefix = '!ldc'; // Ubah prefix sesuai keinginan Anda
+
 function InstallPackages() {
     console.log("You didn't install the required node packages first!");
     console.log('Please wait... starting to install all required node packages using child process');
